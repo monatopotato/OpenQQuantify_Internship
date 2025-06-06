@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ project_name }} | The AI Company</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- Fullscreen Background Image -->
+    <div class="hero-bg"></div>
+
+    <!-- Header -->
+    <header class="fullscreen-header">
+      <h1><a class="logo-link" href="/">The AI Company</a></h1>
+    </header>
+
+    <!-- Grid Panels -->
+    <main class="fullscreen-main">
+      <div class="panel" onclick="location.href='{{ url_for('resume_generator') }}'">
+        <h2>📄 Resume Generator</h2>
+        <p>Build stunning AI-powered resumes in seconds.</p>
+      </div>
+      <div class="panel" onclick="location.href='#simulator'">
+        <h2>💡 Career Simulator</h2>
+        <p>Visualize your future. Upload skills or a resume to generate a career path.</p>
+      </div>
+      <div class="panel disabled">
+        <h2>🧠 About Us (Coming Soon)</h2>
+        <p>Learn how our AI helps shape your future.</p>
+      </div>
+      <div class="panel disabled">
+        <h2>🎤 Interview Coach (Coming Soon)</h2>
+        <p>Practice real interviews with AI and get feedback.</p>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="fullscreen-footer">
+      <p>&copy; 2025 The AI Company. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- ✅ Scroll Fade Script -->
+  <script>
+    window.addEventListener('scroll', () => {
+      const bg = document.querySelector('.hero-bg');
+      const scrollY = window.scrollY;
+      const fadeStart = 0;
+      const fadeEnd = 300;
+
+      const opacity = Math.max(0, 1 - scrollY / (fadeEnd - fadeStart));
+      bg.style.opacity = opacity.toFixed(2);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #1f2937;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  color: #d1d5db;
+  margin-left: 1.5rem;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+h2, h4 {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Resume image button (homepage only) */
+.resume-image-section {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.resume-button-wrapper {
+  margin-top: 1rem;
+}
+
+.resume-image {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.resume-image:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Experience form (resume_generator.html) */
+.experience-form-section {
+  margin-top: 2rem;
+}
+
+.resume-generator-main {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* NEW: Education Box */
+.education-box,
+.experience-box {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.education-box input {
+  margin-bottom: 0.75rem;
+}
+
+.experience-box label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.experience-buttons {
+  margin-top: 1rem;
+}
+
+.add-btn,
+.submit-btn {
+  margin-right: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.add-btn:hover,
+.submit-btn:hover {
+  background: #1e40af;
+}
+
+/* Display box */
+.resume-box {
+  background: #f3f4f6;
+  padding: 1rem;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  font-family: Consolas, monospace;
+  margin-top: 2rem;
+}
+
+footer {
+  background-color: #1f2937;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+.logo-link {
+  color: white;
+  text-decoration: none;
+}
+
+.logo-link:hover {
+  text-decoration: underline;
+}
+
+/* HOMEPAGE FULLSCREEN PANELS */
+.fullscreen-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+  box-sizing: border-box;
+  align-items: start;
+}
+
+.panel {
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(135deg, #ffffff, #f3f4f6);
+  border: 2px solid #d1d5db;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  transition: background 0.5s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.panel:hover {
+  background: radial-gradient(circle at top left, #e0f2fe, #ffffff);
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.panel:active {
+  background: linear-gradient(to bottom right, #c7d2fe, #e0f2fe);
+  transform: scale(0.98);
+}
+
+.panel h2 {
+  margin-top: 0;
+  font-size: 1.2rem;
+  color: #111827;
+}
+
+.panel p {
+  color: #4b5563;
+  font-size: 0.95rem;
+}
+
+.panel.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: #f3f4f6;
+}
+
+.panel.disabled:hover {
+  transform: none;
+  background: #f3f4f6;
+}
+
+@media (max-width: 1024px) {
+  .fullscreen-main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .fullscreen-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Hero Background Effect */
+.hero-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: -1;
+  background-image: url('https://img.freepik.com/free-vector/gradient-abstract-wireframe-background_23-2149009903.jpg?semt=ais_hybrid&w=740');
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.fade-container {
+  position: relative;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(2px);
+  transition: background 0.3s ease;
+  z-index: 1;
+}

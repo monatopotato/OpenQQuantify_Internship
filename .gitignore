@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+
+# Environment files
+.env
+
+# Flask/Cache/DB files
+instance/
+*.sqlite3

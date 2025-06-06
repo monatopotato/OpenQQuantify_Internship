@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resume Generator | The AI Company</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="fullscreen-header">
+      <h1><a class="logo-link" href="/">The AI Company</a></h1>
+      <nav><a href="/">Home</a></nav>
+    </header>
+
+    <main class="resume-generator-main">
+      <section>
+        <h2>📄 Resume Generator</h2>
+        <form id="resumeForm">
+          <input type="text" id="fullName" placeholder="Full Name" required />
+          <input type="email" id="email" placeholder="Email" required />
+          <label for="skills">Top Skills (comma-separated)</label>
+          <input type="text" id="skills" placeholder="e.g. Python, Java, Leadership" required />
+
+          <section id="education-section">
+            <h3>🎓 Education</h3>
+            <div class="education-box">
+              <input type="text" class="school" placeholder="School Name" />
+              <input type="text" class="degree" placeholder="Degree or Program" />
+              <input type="text" class="gradDate" placeholder="Graduation Date (e.g. May 2025)" />
+            </div>
+          </section>
+          <button type="button" class="add-btn" onclick="addEducation()">+ Add Education</button>
+
+          <section id="experience-section">
+            <h3>📌 Experience</h3>
+            <div class="experience-box">
+              <input type="text" class="jobTitle" placeholder="Job Title" />
+              <input type="date" class="startDate" />
+              <input type="date" class="endDate" />
+              <textarea class="description" placeholder="Description"></textarea>
+            </div>
+          </section>
+          <button type="button" class="add-btn" onclick="addExperience()">+ Add Experience</button>
+
+          <button type="submit" class="submit-btn">Generate Resume</button>
+        </form>
+
+        <div id="generated-resume" class="resume-box"></div>
+      </section>
+    </main>
+
+    <footer class="fullscreen-footer">
+      <p>&copy; 2025 The AI Company. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    function addEducation() {
+      const container = document.getElementById('education-section');
+      const box = document.createElement('div');
+      box.className = 'education-box';
+      box.innerHTML = `
+        <input type="text" class="school" placeholder="School Name" />
+        <input type="text" class="degree" placeholder="Degree or Program" />
+        <input type="text" class="gradDate" placeholder="Graduation Date (e.g. May 2025)" />
+      `;
+      container.appendChild(box);
+    }
+
+    function addExperience() {
+      const container = document.getElementById('experience-section');
+      const box = document.createElement('div');
+      box.className = 'experience-box';
+      box.innerHTML = `
+        <input type="text" class="jobTitle" placeholder="Job Title" />
+        <input type="date" class="startDate" />
+        <input type="date" class="endDate" />
+        <textarea class="description" placeholder="Description"></textarea>
+      `;
+      container.appendChild(box);
+    }
+
+    document.getElementById("resumeForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("fullName").value;
+      const email = document.getElementById("email").value;
+      const skills = document.getElementById("skills").value;
+
+      const educations = Array.from(document.querySelectorAll(".education-box")).map(box => ({
+        school: box.querySelector(".school").value,
+        degree: box.querySelector(".degree").value,
+        grad: box.querySelector(".gradDate").value
+      }));
+
+      const experiences = Array.from(document.querySelectorAll(".experience-box")).map(box => ({
+        title: box.querySelector(".jobTitle").value,
+        start: box.querySelector(".startDate").value,
+        end: box.querySelector(".endDate").value,
+        desc: box.querySelector(".description").value
+      }));
+
+      const response = await fetch("/resume-generator-json", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, skills, educations, experiences })
+      });
+
+      const data = await response.json();
+      document.getElementById("generated-resume").innerText = data.resume;
+    });
+  </script>
+</body>
+</html>
