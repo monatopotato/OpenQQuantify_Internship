@@ -22,19 +22,20 @@
         <h2>📄 Resume Generator</h2>
         <p>Build stunning AI-powered resumes in seconds.</p>
       </div>
-      <div class="panel" onclick="location.href='#simulator'">
+      <div class="panel" onclick="location.href='{{ url_for('career_simulator') }}'">
         <h2>💡 Career Simulator</h2>
         <p>Visualize your future. Upload skills or a resume to generate a career path.</p>
       </div>
-      <div class="panel disabled">
-        <h2>🧠 About Us (Coming Soon)</h2>
+      <div class="panel" onclick="location.href='{{ url_for('interview_coach') }}'">
+        <h2>🎤 Interview Coach</h2>
+        <p>Practice interviews with realistic questions and feedback.</p>
+      </div>
+      <div class="panel" onclick="location.href='{{ url_for('about_us') }}'">
+        <h2>🧠 About Us</h2>
         <p>Learn how our AI helps shape your future.</p>
       </div>
-      <div class="panel disabled">
-        <h2>🎤 Interview Coach (Coming Soon)</h2>
-        <p>Practice real interviews with AI and get feedback.</p>
-      </div>
     </main>
+
 
     <!-- Footer -->
     <footer class="fullscreen-footer">

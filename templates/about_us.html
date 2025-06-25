@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us | {{ project_name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <div class="hero-bg"></div>
+
+    <header class="fullscreen-header">
+      <h1><a class="logo-link" href="/">The AI Company</a></h1>
+      <nav>
+        <a href="{{ url_for('resume_generator') }}">Resume Generator</a>
+        <a href="{{ url_for('career_simulator') }}">Career Simulator</a>
+        <a href="{{ url_for('interview_coach') }}">Interview Coach</a>
+        <a href="{{ url_for('about_us') }}">About Us</a>
+      </nav>
+    </header>
+
+
+    <main class="content-main">
+      <section class="about-section">
+        <h2>About Us</h2>
+        <p>Welcome to <strong>{{ project_name }}</strong> — a platform built to empower job seekers, students, and professionals with cutting-edge AI tools.</p>
+
+        <p>We believe that everyone deserves access to personalized career support. Our tools like the <em>Resume Generator</em> and <em>Career Simulator</em> use AI to help users create standout resumes and receive realistic, recruiter-style feedback.</p>
+
+        <p>This platform was created as part of a team internship project to learn and showcase full-stack development using Flask, HTML/CSS, and modern AI integration. Every feature is designed to be fast, intuitive, and helpful.</p>
+
+        <p>We are continuously improving and soon plan to launch new features including:</p>
+        <ul>
+          <li>🧠 Interactive Interview Coaching</li>
+          <li>📈 AI-driven Career Trajectory Mapping</li>
+          <li>🔒 Secure Profile & Job Matching Tools</li>
+        </ul>
+
+        <p>If you're curious about how AI can support your career journey, you're in the right place.</p>
+      </section>
+    </main>
+
+    <footer class="fullscreen-footer">
+      <p>&copy; 2025 {{ project_name }}. Built with 💡 by passionate developers.</p>
+    </footer>
+
+  </div>
+</body>
+</html>

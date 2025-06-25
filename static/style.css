@@ -238,22 +238,6 @@ footer {
   }
 }
 
-/* Hero Background Effect */
-.hero-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100%;
-  z-index: -1;
-  background-image: url('https://img.freepik.com/free-vector/gradient-abstract-wireframe-background_23-2149009903.jpg?semt=ais_hybrid&w=740');
-  background-size: cover;
-  background-position: center;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
 .fade-container {
   position: relative;
   background: rgba(255, 255, 255, 0.8);
@@ -261,3 +245,215 @@ footer {
   transition: background 0.3s ease;
   z-index: 1;
 }
+
+.career-layout {
+  display: flex;
+  flex: 1;
+  padding: 2rem;
+  gap: 1rem;
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+}
+
+.resume-panel {
+  flex: 1;
+  background: #f9fafb;
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.chat-panel {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-left: 1px solid #ccc;
+}
+
+.chat-log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.chat-input {
+  display: flex;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  border-top: 1px solid #ccc;
+  background: #f9fafb;
+}
+
+.chat-input textarea {
+  flex: 1;
+  resize: none;
+  padding: 0.5rem;
+}
+
+.chat-input button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.fullscreen-footer {
+  background-color: #1f2937;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* --- INTERVIEW COACH PAGE OVERRIDES --- */
+.interview-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.interview-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.chat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.chat-log {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  background: #f9fafb;
+}
+
+.chat-entry {
+  margin-bottom: 1rem;
+}
+
+.chat-entry span {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.user {
+  color: #1e40af;
+}
+
+.ai {
+  color: #374151;
+}
+
+.chat-controls {
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+  border-top: 1px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.chat-controls textarea {
+  flex: 1;
+  resize: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+  height: 60px;
+}
+
+.chat-controls button {
+  padding: 0.75rem 1.5rem;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.chat-controls button:hover {
+  background-color: #1e40af;
+}
+
+/* Fullscreen container for the main panels */
+.fullscreen-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  flex-wrap: wrap;
+  max-width: 100vw;
+  overflow: hidden;
+  min-height: calc(100vh - 160px); /* adjust for header + footer */
+}
+
+/* Each panel (button box) */
+.panel {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  width: 220px;
+  height: 220px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.panel:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Clean up unwanted scroll or margins */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #f5f6f7; /* match your theme */
+}
+
+.hero-bg {
+  display: none; /* remove background image if it's causing overflow */
+}
+
+
+.panel h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.panel p {
+  font-size: 0.95rem;
+}
+

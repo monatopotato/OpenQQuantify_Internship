@@ -4,13 +4,21 @@
   <meta charset="UTF-8" />
   <title>Resume Generator | The AI Company</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <div class="page-wrapper">
     <header class="fullscreen-header">
       <h1><a class="logo-link" href="/">The AI Company</a></h1>
-      <nav><a href="/">Home</a></nav>
+      <nav>
+        <a href="{{ url_for('resume_generator') }}">Resume Generator</a>
+        <a href="{{ url_for('career_simulator') }}">Career Simulator</a>
+        <a href="{{ url_for('interview_coach') }}">Interview Coach</a>
+        <a href="{{ url_for('about_us') }}">About Us</a>
+      </nav>
     </header>
+
 
     <main class="resume-generator-main">
       <section>
@@ -46,6 +54,7 @@
         </form>
 
         <div id="generated-resume" class="resume-box"></div>
+        <button id="download-pdf" class="submit-btn" style="display:none; margin-top:1rem;">Download as PDF</button>
       </section>
     </main>
 
@@ -80,7 +89,7 @@
       container.appendChild(box);
     }
 
-    document.getElementById("resumeForm").addEventListener("submit", async function(event) {
+    document.getElementById("resumeForm").addEventListener("submit", async function (event) {
       event.preventDefault();
 
       const name = document.getElementById("fullName").value;
@@ -107,8 +116,27 @@
       });
 
       const data = await response.json();
-      document.getElementById("generated-resume").innerText = data.resume;
+      const resumeText = data.resume;
+      const resumeBox = document.getElementById("generated-resume");
+      resumeBox.innerText = resumeText;
+
+      // ✅ Enable and attach PDF download
+      const downloadBtn = document.getElementById("download-pdf");
+      downloadBtn.style.display = "inline-block";
+
+      downloadBtn.onclick = async () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const lines = doc.splitTextToSize(resumeText, 180); // max line width
+        doc.setFont("Times", "Normal");
+        doc.setFontSize(12);
+        doc.text(lines, 15, 20); // (x, y)
+
+        doc.save("generated_resume.pdf");
+      };
     });
   </script>
+
 </body>
 </html>

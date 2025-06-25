@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Career Simulator | The AI Company</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .page-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .simulator-container {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .resume-panel {
+      flex: 3;
+      padding: 1rem;
+      background: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .resume-panel iframe {
+      flex: 1;
+      border: none;
+      width: 100%;
+    }
+
+    .chat-panel {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      background: #fff;
+      border-left: 1px solid #ccc;
+    }
+
+    .chat-history {
+      flex: 1;
+      overflow-y: auto;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #fff;
+    }
+
+    .chat-input {
+      display: flex;
+    }
+
+    .chat-input textarea {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: none;
+    }
+
+    footer {
+      background-color: #1f2937;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .fullscreen-header {
+      background-color: #1f2937;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-link {
+      color: white;
+      text-decoration: none;
+    }
+
+    .upload-box {
+      text-align: center;
+      padding: 4rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <header class="fullscreen-header">
+      <h1><a class="logo-link" href="/">The AI Company</a></h1>
+      <nav>
+        <a href="{{ url_for('resume_generator') }}">Resume Generator</a>
+        <a href="{{ url_for('career_simulator') }}">Career Simulator</a>
+        <a href="{{ url_for('interview_coach') }}">Interview Coach</a>
+        <a href="{{ url_for('about_us') }}">About Us</a>
+      </nav>
+    </header>
+
+
+    {% if resume_url %}
+    <div class="simulator-container">
+      <!-- Resume PDF Viewer -->
+      <div class="resume-panel">
+        <h3>Your Resume:</h3>
+        <iframe src="{{ resume_url }}"></iframe>
+      </div>
+
+      <!-- Recruiter Chat -->
+      <div class="chat-panel">
+        <div class="chat-history" id="chat-box">
+          <div><strong>🤖 Recruiter Bot:</strong></div>
+          <ul>
+            <li><strong>👍 Strength 1:</strong> {{ initial_strengths[0] }}</li>
+            <li><strong>👍 Strength 2:</strong> {{ initial_strengths[1] }}</li>
+            <li><strong>👍 Strength 3:</strong> {{ initial_strengths[2] }}</li>
+            <li><strong>🛠️ Improve 1:</strong> {{ initial_improvements[0] }}</li>
+            <li><strong>🛠️ Improve 2:</strong> {{ initial_improvements[1] }}</li>
+            <li><strong>🛠️ Improve 3:</strong> {{ initial_improvements[2] }}</li>
+          </ul>
+        </div>
+
+        <form class="chat-input" onsubmit="sendMessage(event)">
+          <textarea id="career-question" rows="2" placeholder="Ask a follow-up... (Enter to send, Shift+Enter for new line)"></textarea>
+        </form>
+      </div>
+    </div>
+
+    <!-- Safely pass resume text to JavaScript -->
+    <script id="resume-data" type="application/json">
+      {{ raw_resume | tojson | safe }}
+    </script>
+
+    {% else %}
+    <div class="upload-box">
+      <h2>💡 Career Simulator</h2>
+      <p>Upload your resume PDF to get recruiter feedback and simulate job screening.</p>
+      <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="resume_pdf" accept=".pdf" required><br><br>
+        <button class="submit-btn" type="submit">Upload Resume</button>
+      </form>
+    </div>
+    {% endif %}
+
+    <footer>
+      <p>&copy; 2025 The AI Company. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    const input = document.getElementById("career-question");
+    const chatBox = document.getElementById("chat-box");
+    const resumeText = JSON.parse(document.getElementById("resume-data").textContent);
+
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    async function sendMessage() {
+      const prompt = input.value.trim();
+      if (!prompt) return;
+
+      const userMsg = document.createElement("div");
+      userMsg.innerHTML = `<strong>You:</strong> ${prompt}`;
+      chatBox.appendChild(userMsg);
+
+      const aiMsg = document.createElement("div");
+      aiMsg.innerHTML = `<strong>🤖:</strong> <em>Typing...</em>`;
+      chatBox.appendChild(aiMsg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      input.value = "";
+
+      try {
+        const res = await fetch("/api/ask-career", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt, resume_text: resumeText })
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text(); // Try reading the HTML error
+          throw new Error(`Server Error (${res.status}): ${errorText.slice(0, 100)}...`);
+        }
+
+        const data = await res.json();
+        aiMsg.innerHTML = `<strong>🤖:</strong> ${data.response}`;
+      } catch (err) {
+        aiMsg.innerHTML = `<strong>🤖:</strong> Error: ${err.message}`;
+      }
+
+    }
+  </script>
+</body>
+</html>

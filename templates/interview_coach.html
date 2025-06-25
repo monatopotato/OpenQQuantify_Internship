@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interview Coach | {{ project_name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="interview-wrapper">
+
+  <!-- Header -->
+  <header>
+    <h1><a href="/" class="logo-link">{{ project_name }}</a></h1>
+    <nav>
+      <a href="{{ url_for('resume_generator') }}">Resume Generator</a>
+      <a href="{{ url_for('career_simulator') }}">Career Simulator</a>
+      <a href="{{ url_for('interview_coach') }}">Interview Coach</a>
+      <a href="{{ url_for('about_us') }}">About Us</a>
+    </nav>
+  </header>
+
+  <!-- Main Chat Section -->
+  <main class="interview-main">
+    <h2>🎤 Interview Coach</h2>
+    <p>Practice job interviews with realistic AI-driven feedback. Start typing to begin.</p>
+
+    <div class="chat-box">
+      <div id="chat-log" class="chat-log"></div>
+      <div class="chat-controls">
+        <textarea id="user-input" placeholder="Type your answer..."></textarea>
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="fullscreen-footer">
+    <p>&copy; 2025 The AI Company. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const chatLog = document.getElementById("chat-log");
+    const inputField = document.getElementById("user-input");
+
+    function addMessage(role, message) {
+      const entry = document.createElement("div");
+      entry.className = "chat-entry";
+      entry.innerHTML = `<span class="${role}">${role === 'user' ? 'You' : 'AI'}:</span>${message}`;
+      chatLog.appendChild(entry);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const userMsg = inputField.value.trim();
+      if (!userMsg) return;
+
+      addMessage("user", userMsg);
+      inputField.value = "";
+
+      try {
+        const res = await fetch("/api/interview-chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: userMsg })
+        });
+
+        const data = await res.json();
+        addMessage("ai", data.reply);
+      } catch (err) {
+        addMessage("ai", "⚠️ Failed to get response from AI.");
+      }
+    }
+  </script>
+</body>
+</html>
